@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+import { AgmCoreModule} from "@agm/core";
 import { AppRoutingModule } from './app.routing';
+import { HttpModule} from "@angular/http";
+import { CommonModule} from "@angular/common";
 
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
@@ -15,6 +18,10 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
+import {GoogleMapsApiService} from "./services/google-maps-api.service";
+import {BuscarEstacionamientoComponent} from "./components/buscar-estacionamiento/buscar-estacionamiento.component";
+import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google-maps.component";
+
 
 @NgModule({
   declarations: [
@@ -24,17 +31,24 @@ import { LoginComponent } from './login/login.component';
     ProfileComponent,
     NavbarComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    BuscarEstacionamientoComponent,
+    DaweGoogleMapsComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     NgbModule.forRoot(),
     FormsModule,
+    HttpModule,
     RouterModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    AgmCoreModule.forRoot({
+        apiKey: 'AIzaSyCowZ2DOJ2TZf2iZ3Xj_Pu1_T8QbJLnzIc'
+    })
   ],
-  providers: [],
+  providers: [GoogleMapsApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
