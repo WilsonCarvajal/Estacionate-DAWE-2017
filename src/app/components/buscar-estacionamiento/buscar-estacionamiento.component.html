@@ -1,0 +1,12 @@
+<h1>{{ title }}</h1>
+
+<div id="box">
+  <form>
+    Dirección <input type="text" #titleInput><br>
+    <button type="submit" (click)="findParking(titleInput.value)">Buscar</button>
+  </form>
+
+  <!-- this creates a google map on the page with the given lat/lng from -->
+  <!-- the component as the initial center of the map: -->
+  <app-dawe-google-maps [mapOrigin]="{lat: origin.lat, lng : origin.lng}" ></app-dawe-google-maps>
+</div>
