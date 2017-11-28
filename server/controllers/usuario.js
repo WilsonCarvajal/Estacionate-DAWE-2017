@@ -1,7 +1,7 @@
 /**
  * Created by Wizao on 05-11-2017.
  */
-'use strict';
+'use strict'
 //modulos
 var bcrypt = require('bcrypt-nodejs');
 
@@ -9,6 +9,12 @@ var bcrypt = require('bcrypt-nodejs');
 var Usuario = require('../models/usuario');
 
 var jwt = require('../services/jwt');
+
+//PASSPORT
+var passport = require('passport'),
+    localStrategy = require('passport-local').Strategy;
+var passportFacebook = require('passport'),
+    facebookStrategy = require('passport-facebook');
 
 function prueba_usuario(req, res){
     console.log('prueba correcta');
@@ -116,9 +122,56 @@ function guardar_usuario(req, res){
     });
 }
 
+//Funcion de prueba
+function login(req, res, next) {
+    passport.use(new localStrategy({
+            usernameField: 'username',
+            passwordField: 'password',
+        },
+        function (username, password, done) {
+            console.log('FUNCIONA:'+username);
+            console.log(password);
+        }
+    ));
+
+    passport.serializeUser(function (user, done) {
+        done(null, user); // req.user
+    });
+    passport.deserializeUser(function (user, done) {
+        done(null, user);
+    });
+
+    console.log(req.url);
+    console.log(req.body);
+    passport.authenticate('local', function(err, user, info) {
+        console.log("authenticate");
+        console.log(err);
+        console.log(user);
+        console.log(info);
+    })(req, res, next);
+}
+
+
+function registrarFacebook(accessToken, refreshToken, profile, done) {
+
+    console.log('PASSPORT--FACEBOOK');
+    return done(null,profile._json.id);
+
+}
+
+function callback() {
+    console.log('callBack');
+    passportFacebook.authenticate('facebook',
+        { successRedirect: 'http://localhost:4200/login',
+            failureRedirect: 'http://localhost:4200/login' });
+}
+
 module.exports = {
     prueba_usuario,
     guardar_usuario,
     buscar_usuario,
-    inicio_sesion
-};
+    inicio_sesion,
+    login,
+    registrarFacebook,
+    callback
+}
