@@ -1,0 +1,33 @@
+<div class="wrapper">
+  <div class="page-header" style="background-image: url('../assets/img/login-image.jpg');">
+    <div class="filter"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 mr-auto ml-auto">
+          <div class="card card-register">
+            <h3 class="title">{{ title }}</h3>
+            <div id="box">
+              <form class="register-form">
+                <label>Dirección</label>
+                <input type="text" class="form-control  " #titleInput><br>
+                <button type="submit" class="btn btn-danger btn-block btn-round" (click)="findParking(titleInput.value)">Buscar</button>
+              </form>
+              <br>
+              <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                <ngb-panel title="Map">
+                  <ng-template ngbPanelContent>
+                    <app-dawe-google-maps [mapOrigin]="{lat: origin.lat, lng : origin.lng}" ></app-dawe-google-maps>
+                  </ng-template>
+                </ngb-panel>
+
+              </ngb-accordion>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer register-footer text-center">
+        <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
+      </div>
+    </div>
+  </div>
+</div>
