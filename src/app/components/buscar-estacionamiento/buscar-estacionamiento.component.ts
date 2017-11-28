@@ -8,7 +8,7 @@ import { GoogleMapsApiService } from "../../services/google-maps-api.service";
 })
 export class BuscarEstacionamientoComponent implements OnInit {
 
-    title: string = 'My first AGM project';
+    title: string = 'AGM Map';
     origin  = {lat : -23.6509279, lng : -70.39750219999999};
     mark = {lat : -23.6509279, lng : -70.39750219999999};
 
