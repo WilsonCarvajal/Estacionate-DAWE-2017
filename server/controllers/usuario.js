@@ -1,7 +1,7 @@
 /**
  * Created by Wizao on 05-11-2017.
  */
-'use strict'
+'use strict';
 //modulos
 var bcrypt = require('bcrypt-nodejs');
 
@@ -121,4 +121,4 @@ module.exports = {
     guardar_usuario,
     buscar_usuario,
     inicio_sesion
-}
+};
