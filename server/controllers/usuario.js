@@ -76,9 +76,7 @@ function buscar_usuario(req, res){
             }
         }
     });
-
 }
-
 function guardar_usuario(req, res){
     //Crear Objeto Usuario
     var usuario = new Usuario();

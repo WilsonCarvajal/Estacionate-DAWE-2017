@@ -31,6 +31,7 @@
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.4",
     "ng2-nouislider": "1.6.1",
+    "nodemon": "^1.12.1",
     "nouislider": "9.2.0",
     "popper.js": "^1.12.3",
     "rxjs": "^5.1.0",
