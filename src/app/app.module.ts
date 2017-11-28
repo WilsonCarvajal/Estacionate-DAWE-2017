@@ -18,10 +18,10 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 import {GoogleMapsApiService} from "./services/google-maps-api.service";
 import {BuscarEstacionamientoComponent} from "./components/buscar-estacionamiento/buscar-estacionamiento.component";
 import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google-maps.component";
-
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google
     NavbarComponent,
     FooterComponent,
     LoginComponent,
+    RegistroComponent,
     BuscarEstacionamientoComponent,
     DaweGoogleMapsComponent
   ],
