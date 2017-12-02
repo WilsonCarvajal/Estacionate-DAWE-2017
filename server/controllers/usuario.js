@@ -10,11 +10,6 @@ var Usuario = require('../models/usuario');
 
 var jwt = require('../services/jwt');
 
-//PASSPORT
-var passport = require('passport'),
-    localStrategy = require('passport-local').Strategy;
-var passportFacebook = require('passport'),
-    facebookStrategy = require('passport-facebook');
 
 function prueba_usuario(req, res){
     console.log('prueba correcta');
@@ -122,48 +117,65 @@ function guardar_usuario(req, res){
     });
 }
 
-//Funcion de prueba
-function login(req, res, next) {
-    passport.use(new localStrategy({
-            usernameField: 'username',
-            passwordField: 'password',
-        },
-        function (username, password, done) {
-            console.log('FUNCIONA:'+username);
-            console.log(password);
-        }
-    ));
-
-    passport.serializeUser(function (user, done) {
-        done(null, user); // req.user
-    });
-    passport.deserializeUser(function (user, done) {
-        done(null, user);
-    });
-
-    console.log(req.url);
-    console.log(req.body);
-    passport.authenticate('local', function(err, user, info) {
-        console.log("authenticate");
-        console.log(err);
-        console.log(user);
-        console.log(info);
-    })(req, res, next);
-}
-
-
 function registrarFacebook(accessToken, refreshToken, profile, done) {
-
     console.log('PASSPORT--FACEBOOK');
-    return done(null,profile._json.id);
+
+    Usuario.findOne({ email: profile._json.email}, (err,usuario_encontrado) => {
+        if(err){
+            console.log('Error');
+            // res.status(500).send({message: 'Error'+err})
+        }else{
+            if(!usuario_encontrado){
+                console.log('USUARIO NO ENCONTRADO')
+                //Crear Objeto Usuario
+                var usuario = new Usuario();
+
+                //Recoger los Parametros de la Peticion
+                var params = profile._json;
+                usuario.rut = null;
+                usuario.nombre = params.name;
+                usuario.apellido_paterno = null;
+                usuario.apellido_materno = null;
+                usuario.email = params.email;
+                usuario.direccion = null;
+                usuario.locales = null;
+                usuario.autos = null;
+                usuario.rol = null;
+                usuario.contrasenia = null;
+                usuario.idFacebook = params.id;
+                usuario.save();
+                return done(null,params);
+            }else{
+                console.log('ENCONTRADO');
+                return done(null,profile._json);
+            }
+        }
+    });
 
 }
 
-function callback() {
-    console.log('callBack');
-    passportFacebook.authenticate('facebook',
-        { successRedirect: 'http://localhost:4200/login',
-            failureRedirect: 'http://localhost:4200/login' });
+function callback(req, res) {
+    console.log(req.user);
+    res.redirect('http://localhost:4200/home/'+req.user.id);
+}
+
+function buscarFacebook(req,res) {
+    //Recoger los Parametros de la Peticion
+    var usuario = new Usuario();
+    // var params = req.query;
+    // usuario.rut = params.rut;
+
+    Usuario.findOne({ idFacebook: req.params.id}, (err,usuario_encontrado) => {
+        if(err){
+            res.status(500).send({message: 'Error'+err})
+        }else{
+            if(!usuario_encontrado){
+                res.status(404).send({message: 'Usuario no Encontrado'})
+            }else{
+                res.status(200).send(usuario_encontrado);
+            }
+        }
+    });
 }
 
 module.exports = {
@@ -171,7 +183,7 @@ module.exports = {
     guardar_usuario,
     buscar_usuario,
     inicio_sesion,
-    login,
     registrarFacebook,
-    callback
+    callback,
+    buscarFacebook
 }

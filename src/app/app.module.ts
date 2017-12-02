@@ -18,8 +18,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
-import { RegistroComponent } from './registro/registro.component';
 import {GoogleMapsApiService} from "./services/google-maps-api.service";
+import {UsuarioService} from  "./services/usuario.service";
 import {BuscarEstacionamientoComponent} from "./components/buscar-estacionamiento/buscar-estacionamiento.component";
 import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google-maps.component";
 
@@ -32,7 +32,6 @@ import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google
     NavbarComponent,
     FooterComponent,
     LoginComponent,
-    RegistroComponent,
     BuscarEstacionamientoComponent,
     DaweGoogleMapsComponent
   ],
@@ -49,7 +48,7 @@ import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google
         apiKey: 'AIzaSyCowZ2DOJ2TZf2iZ3Xj_Pu1_T8QbJLnzIc'
     })
   ],
-  providers: [GoogleMapsApiService],
+  providers: [GoogleMapsApiService, UsuarioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

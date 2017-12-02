@@ -2,6 +2,7 @@
     <div class="page-header section-dark" style="background-image: url('assets/img/antoine-barres.jpg')">
         <div class="filter"></div>
         <div class="content-center">
+            <div *ngIf="!idFacebook">
             <div class="container">
                 <div class="title-brand">
                     <div class="angular-logo">
@@ -17,6 +18,10 @@
                 </div>
 
                 <h2 class="presentation-subtitle text-center">Free Bootstrap 4 UI Kit for Angular 4+</h2>
+            </div>
+            </div>
+            <div *ngIf="usuario">
+                <h1>{{usuario.email}}</h1>
             </div>
         </div>
         <div class="moving-clouds" style="background-image: url('assets/img/clouds.png'); "></div>

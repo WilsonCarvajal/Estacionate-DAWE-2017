@@ -13,6 +13,7 @@ import {BuscarEstacionamientoComponent} from "./components/buscar-estacionamient
 
 const routes: Routes =[
     { path: 'home',             component: HomeComponent },
+    { path: 'home/:id',         component: HomeComponent},
     { path: 'user-profile',     component: ProfileComponent },
     { path: 'signup',           component: SignupComponent },
     { path: 'landing',          component: LandingComponent },
