@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleMapsApiService } from "../../services/google-maps-api.service";
+import { Local} from "../../models/local";
 
 @Component({
   selector: 'app-buscar-estacionamiento',
@@ -12,7 +13,9 @@ export class BuscarEstacionamientoComponent implements OnInit {
     origin  = {lat : -23.6509279, lng : -70.39750219999999};
     mark = {lat : -23.6509279, lng : -70.39750219999999};
 
-  constructor( private GoogleMapsApiService: GoogleMapsApiService) { }
+  constructor( private GoogleMapsApiService: GoogleMapsApiService) {
+
+  }
 
   ngOnInit() {
   }
