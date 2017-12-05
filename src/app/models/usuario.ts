@@ -13,9 +13,6 @@ export class Usuario {
     public setRut(rut: string) {
         this.rut = rut;
     }
-    public(email: {type: string, lowercase: true}) {
-        this.email = email;
-    }
     public setContrasenia(contrasenia: string) {
         this.contrasenia = contrasenia;
     }

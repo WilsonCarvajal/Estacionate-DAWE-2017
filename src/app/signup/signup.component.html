@@ -17,24 +17,25 @@
                                 <i class="fa fa-twitter"></i>
                             </a>
                         </div>
-                        <form class="register-form">
-                            <label>Email</label>
-                            <input  [(ngModel)]="usuario.email" name="email" type="text" class="form-control" placeholder="ejemplo@gmail.com">
-
+                        <form class="register-form" name="registroForm">
                             <label>Nombre</label>
-                            <input  [(ngModel)]="usuario.nombre" name="nombre" type="text" class="form-control" placeholder="Juan">
-
+                            <input  [ngModel]="usuario.nombre" name="nombre" type="text" class="form-control" placeholder="Juan" [required]="true">
+                            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+                                 class="alert alert-danger"></div>
                             <label>Apellido paterno</label>
-                            <input  [(ngModel)]="usuario.apellido_paterno" name="apellidoPaterno" type="text" class="form-control" placeholder="Pérez">
+                            <input  [ngModel]="usuario.apellido_paterno" name="apellidoPaterno" type="text" class="form-control" placeholder="Pérez" [required]="true">
 
                             <label>Apellido materno</label>
-                            <input  [(ngModel)]="usuario.apellido_materno" name="apellidoMaterno" type="text" class="form-control" placeholder="Pereira">
+                            <input  [ngModel]="usuario.apellido_materno" name="apellidoMaterno" type="text" class="form-control" placeholder="Pereira" [required]="true">
 
                             <label>Teléfono</label>
-                            <input  name="telefono" type="text" class="form-control" placeholder="+56912345678">
+                            <input  [ngModel]="usuario.telefono" name="telefono" type="text" class="form-control" placeholder="+56912345678 (opcional)">
+
+                            <label>Email</label>
+                            <input  [ngModel]="usuario.email" name="email" type="email" class="form-control" placeholder="ejemplo@gmail.com" [required]="true">
 
                             <label>Contraseña</label>
-                            <input  [(ngModel)]="usuario.contrasenia" name="password" type="password" class="form-control" placeholder="Al menos una mayúscula">
+                            <input  [ngModel]="usuario.contrasenia" name="password" type="password" class="form-control" placeholder="Al menos una mayúscula" [required]="true">
 
                             <button type="submit" (click)="submit(usuario)" class="btn btn-danger btn-block btn-round">Registrar</button>
                         </form>
@@ -42,7 +43,7 @@
                 </div>
             </div>
             <div class="footer register-footer text-center">
-                <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
+                <h6>&copy;{{test | date: 'yyyy'}}, hecho con <i class="fa fa-heart heart"></i> por Team DAWE</h6>
             </div>
         </div>
     </div>
