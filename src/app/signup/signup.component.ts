@@ -1,10 +1,7 @@
 ///<reference path="../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import { Component, OnInit } from '@angular/core';
-import { Usuario} from '../models/usuario';
+import { Usuario } from '../models/usuario';
 import { UsuarioService} from '../services/usuario.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'app-signup',
@@ -13,24 +10,30 @@ import {NgForm} from '@angular/forms';
     providers: [UsuarioService]
 })
 export class SignupComponent implements OnInit {
-    // Usuario creado al registrarse. Contiene los datos que se rellenan en el formulario de registros
-    public usuario: Usuario;
-    form;
+    usuario: Usuario; // Contiene los datos del usuario que se rellenan en el formulario de registro
+    submitted = false; // True si el formulario ha sido enviado. Falso en caso contrario
+    mensajeResultado; // String que reemplaza al formulario indicando si se realizó exitosamente el envío
+                               // o si hubo un error.
     constructor() {
     }
 
+    // Obtiene el objeto usuario y retorna sus datos como json
+    get json() {
+        return JSON.stringify(this.usuario);
+    }
+    // Inicialización del usuario vacío
     ngOnInit() {
-        this.usuario = new Usuario()
-        this.form = new FormGroup({
-
-        })
+        this.usuario = new Usuario();
     }
 
-
-    submit(usuario: Usuario) {
+    processForm() {
         if (this.validarInputs() === true) {
+            console.log(this.usuario);
+            this.submitted = true;
+            this.mensajeResultado = 'Cuenta creada exitosamente ☺';
             // Enviar datos al backend
         } else {
+            this.mensajeResultado = '';
             // Desplegar errores en los campos correspondientes
         }
     }
