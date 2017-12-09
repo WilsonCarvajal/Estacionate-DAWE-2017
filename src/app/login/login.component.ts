@@ -1,32 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-// import {UsuarioService} from "../services/usuario.service";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute, Params} from "@angular/router";
+import {UsuarioService} from "../services/usuario.service";
+import {Usuario} from "../models/Usuario";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  // providers: [UsuarioService]
 })
 export class LoginComponent implements OnInit {
+
   test: Date = new Date();
-  constructor() { }
+  public usuario: Usuario;
+
+  constructor(private _router: Router,
+              private _route: ActivatedRoute,
+              private usuarioService: UsuarioService
+  ) { }
 
   ngOnInit() {
   }
 
-  // registrarFacebook(){
-  //   this.usuarioService.addUsuario().subscribe(
-  //       response => {
-  //         if (response.code === 200) {
-  //           this._router.navigate(['/']);
-  //         } else {
-  //           console.log(response);
-  //         }
-  //       },
-  //       error => {
-  //         console.log(<any>error);
-  //       }
-  //   );
-  // }
 }

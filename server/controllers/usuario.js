@@ -154,9 +154,10 @@ function registrarFacebook(accessToken, refreshToken, profile, done) {
 
 }
 
-function callback(req, res) {
+function callback(req, res,next) {
     console.log(req.user);
     res.redirect('http://localhost:4200/home/'+req.user.id);
+
 }
 
 function buscarFacebook(req,res) {

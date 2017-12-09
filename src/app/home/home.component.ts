@@ -27,23 +27,13 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this._route.params.forEach((params: Params) => {
             let id = params['id'];
-            this.idFacebook = id;
-            this.usuarioService.getUsuario(id).subscribe(
-                response => {
-                    if(response.code == 200){
-                        alert('200')
-                        this.usuario = response;
-                    }else{
-                        alert('error')
-                        this._router.navigate(['ERROR']);
-                    }
-                },
-                error => {
-                    alert(error)
-                    console.log(<any>error);
-                }
-            );
+            if (id){
+                this.idFacebook = id;
+                localStorage.setItem('usuario',this.idFacebook)
+                window.location.reload();
+            }
 
         });
     }
+
 }

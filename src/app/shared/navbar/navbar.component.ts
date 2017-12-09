@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {Params, ActivatedRoute, Router} from "@angular/router";
+import {UsuarioService} from "../../services/usuario.service";
+import {Usuario} from "../../models/Usuario";
 
 @Component({
     selector: 'app-navbar',
@@ -9,14 +12,33 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
+    public usuario: Usuario;
 
-    constructor(public location: Location, private element : ElementRef) {
+    constructor(public location: Location, private element : ElementRef,private _router: Router,
+                private _route: ActivatedRoute,
+                private usuarioService: UsuarioService) {
         this.sidebarVisible = false;
     }
 
     ngOnInit() {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+        if (localStorage.getItem('usuario') != null){
+            this.usuarioService.getUsuario(localStorage.getItem('usuario')).subscribe(
+                response => {
+                    if(response){
+                        this.usuario = response;
+                        this._router.navigate(['/'])
+                    }else{
+                        this._router.navigate(['ERROR']);
+                    }
+                },
+                error => {
+                    alert(error)
+                    console.log(<any>error);
+                }
+            );
+        }
     }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -75,4 +97,14 @@ export class NavbarComponent implements OnInit {
             return false;
         }
     }
+
+    salir(){
+        this.usuario = null;
+        this._router.navigate(['/'])
+        localStorage.clear();
+    }
+
+
+
+
 }

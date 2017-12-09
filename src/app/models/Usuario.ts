@@ -4,4 +4,5 @@ export class Usuario {
     public apellidoPaterno: string;
     public apellidoMaterno: string;
     public email: string;
+    public idFacebook: string;
 }

@@ -23,7 +23,7 @@ api.get('/buscar-facebook/:id', UsuarioController.buscarFacebook);
 passportFacebook.use(new facebookStrategy({
         clientID: '1849209735108263',
         clientSecret: '4b967610104a42ce7841eeec2e785795',
-        callbackURL: '/auth/facebook/callback/',
+        callbackURL: '/api/auth/facebook/callback/',
         profileFields: ['id', 'displayName', 'email']
     },
     function (accessToken, refreshToken, profile, done) {
