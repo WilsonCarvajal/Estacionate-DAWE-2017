@@ -12,6 +12,7 @@ export class DaweGoogleMapsComponent implements OnInit {
   @Input() mapOrigin = {lat: -23.6509279,lng: -70.39750219999999};
   @Input() marks;
   @Input() locales: Local[] = [];
+  @Input() mapZoom = 15;
 
   constructor() {
       let local = new Local();
