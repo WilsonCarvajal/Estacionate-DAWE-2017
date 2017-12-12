@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AgmCoreModule} from "@agm/core";
 import { AppRoutingModule } from './app.routing';
 import { HttpModule} from "@angular/http";
-import { CommonModule} from "@angular/common";
 
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
@@ -18,10 +17,11 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
-import { RegistroComponent } from './registro/registro.component';
+//import { RegistroComponent } from './registro/registro.component';
 import {GoogleMapsApiService} from "./services/google-maps-api.service";
 import {BuscarEstacionamientoComponent} from "./components/buscar-estacionamiento/buscar-estacionamiento.component";
 import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google-maps.component";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google
     NavbarComponent,
     FooterComponent,
     LoginComponent,
-    RegistroComponent,
+//    RegistroComponent,
     BuscarEstacionamientoComponent,
     DaweGoogleMapsComponent
   ],
