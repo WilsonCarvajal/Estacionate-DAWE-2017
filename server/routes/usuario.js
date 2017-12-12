@@ -5,14 +5,15 @@
 
 var express = require('express');
 var UsuarioController = require('../controllers/usuario');
+const mdAuth = require('../../../../DAWE/Estacionate-DAWE-2017/server/midleware/autenticator');
 var passportFacebook = require('passport'),
     facebookStrategy = require('passport-facebook');
 
 var api = express.Router();
 
-api.get('/prueba', UsuarioController.prueba_usuario);
+api.get('/prueba', mdAuth.ensureAuth, UsuarioController.prueba_usuario);
 api.post('/registro', UsuarioController.guardar_usuario);
-api.get('/buscar', UsuarioController.buscar_usuario);
+api.get('/buscar', mdAuth.ensureAuth, UsuarioController.buscar_usuario);
 api.post('/iniciarSesion', UsuarioController.inicio_sesion);
 api.post('/login',UsuarioController.login);
 api.get('/registrar-facebook',passportFacebook.authenticate('facebook'));
