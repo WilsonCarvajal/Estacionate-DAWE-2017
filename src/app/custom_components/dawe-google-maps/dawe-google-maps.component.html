@@ -2,11 +2,11 @@
   <!-- this creates a google map on the page with the given lat/lng from -->
   <!-- the component as the initial center of the map: -->
     <div *ngIf="mapOrigin">
-        <agm-map [latitude]="mapOrigin.lat" [longitude]="mapOrigin.lng">
+        <agm-map [latitude]="mapOrigin.lat" [longitude]="mapOrigin.lng" [zoom]="mapZoom">
             <agm-marker [latitude]="mapOrigin.lat" [longitude]="mapOrigin.lng"></agm-marker>
-            <div *ngIf="marks">
-                <div *ngFor="let mark of marks">
-                    <agm-marker [latitude]="mark.lat" [longitude]="mark.lng" iconUrl="../assets/img/icons/E-icon.svg"></agm-marker>
+            <div *ngIf="locales">
+                <div *ngFor="let local of locales">
+                    <agm-marker [latitude]="local.latitud" [longitude]="local.longitud"></agm-marker>
                 </div>
             </div>
         </agm-map>
