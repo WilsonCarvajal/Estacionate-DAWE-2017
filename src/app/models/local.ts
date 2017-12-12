@@ -7,5 +7,6 @@ export class Local{
     duenio: object;
     estacionamientos: object;
     tarifaBloque: object;
+    nombre: string;
 
 }

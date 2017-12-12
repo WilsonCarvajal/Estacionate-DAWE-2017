@@ -6,7 +6,7 @@
             <agm-marker [latitude]="mapOrigin.lat" [longitude]="mapOrigin.lng"></agm-marker>
             <div *ngIf="locales">
                 <div *ngFor="let local of locales">
-                    <agm-marker [latitude]="local.latitud" [longitude]="local.longitud" iconUrl="../assets/img/icons/E-icon.svg"></agm-marker>
+                    <agm-marker [latitude]="local.latitud" [longitude]="local.longitud"></agm-marker>
                 </div>
             </div>
         </agm-map>

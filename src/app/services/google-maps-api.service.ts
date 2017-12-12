@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable} from "rxjs/Observable";
 
@@ -25,4 +25,16 @@ export class GoogleMapsApiService {
       headers.append('Accept', 'application/json');
       return headers;
   }
+
+  getParkings(coordenadas){
+      const url ='http://localhost:8000/buscar_local';
+      let data = JSON.stringify(coordenadas);
+      console.log(data);
+      let headers = new Headers({'Content-Type': 'application/json'});
+      let response = this.http.post(url, data, {headers: headers}).
+      map(res => res.json());
+      //console.log(res);
+      return response;
+  }
+
 }

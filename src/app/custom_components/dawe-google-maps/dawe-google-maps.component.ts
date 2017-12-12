@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Local} from "../../models/local";
+import { GoogleMapsApiService } from "../../services/google-maps-api.service";
 
 @Component({
   selector: 'app-dawe-google-maps',
@@ -8,24 +9,36 @@ import {Local} from "../../models/local";
 })
 export class DaweGoogleMapsComponent implements OnInit {
 
-  title: string = 'AGM Map';
-  @Input() mapOrigin = {lat: -23.6509279,lng: -70.39750219999999};
-  @Input() marks;
-  @Input() locales: Local[] = [];
-  @Input() mapZoom = 15;
+    title: string = 'AGM Map';
+    @Input() mapOrigin = {lat: 0,lng: 0};
+    @Input() marks;
+    @Input() locales = [];
+    @Input() mapZoom = 15;
 
-  constructor() {
-      let local = new Local();
-      local.latitud = -22;
-      local.longitud = -70;
-      this.locales.push(local);
-  }
+    constructor(private GoogleMapsApiService: GoogleMapsApiService) {
+        console.log(this.locales);
+    }
 
-  ngOnInit() {
-      let local = new Local();
-      local.latitud = -22;
-      local.longitud = -70;
-      this.locales.push(local);
-  }
+    ngOnInit() {
+      this.getParkings();
+    }
 
+
+    getParkings(){
+        let coordenadas = {latitude: this.mapOrigin.lat, longitude: this.mapOrigin.lng};
+        this.GoogleMapsApiService.getParkings(coordenadas).subscribe( response=>{
+            //console.log(response);
+            response.forEach((object) => {
+                //console.log(object);
+                let local = new Local();
+                local.latitud = object['x'];
+                local.longitud = object['y'];
+                local.direccion = object['direccion'];
+                local.nombre = object['nombre'];
+                local.cantidadDisponible = object['cantidadDisponible'];
+                this.locales.push(local);
+                //console.log(this.parking_lots);
+            });
+        });
+    }
 }

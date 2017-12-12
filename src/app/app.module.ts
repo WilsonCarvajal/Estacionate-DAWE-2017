@@ -23,6 +23,7 @@ import {GoogleMapsApiService} from "./services/google-maps-api.service";
 import {BuscarEstacionamientoComponent} from "./custom_components/buscar-estacionamiento/buscar-estacionamiento.component";
 import {DaweGoogleMapsComponent} from "./custom_components/dawe-google-maps/dawe-google-maps.component";
 import {CommonModule} from "@angular/common";
+import { AdministrarLocalesComponent } from './custom_components/administrar-locales/administrar-locales.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {CommonModule} from "@angular/common";
 //    RegistroComponent,
     BuscarEstacionamientoComponent,
     DaweGoogleMapsComponent,
-    HomeComponent
+    HomeComponent,
+    AdministrarLocalesComponent
   ],
   imports: [
     BrowserModule,
