@@ -1,4 +1,5 @@
-'use strict'
+'use strict';
+import {Estacionamiento} from "../../src/app/models/estacionamiento";
 
 let Local = require('../models/local');
 
@@ -73,8 +74,60 @@ function guardar_local(req, res){
     });
 }
 
+function agregarEstacionamientos(req, res) {
+    const params = req.body;
+    const direccion = params.direccion;
+    const numeroEst = params.cantidadEstacionamientos;
+    const metrosCuadrados = params.metrosCuadrados;
+
+    Local.findOne({ direccion:direccion}, (err, local_encontrado) => {
+        if(err) {
+            res.status(500).send({message: 'Error'+err});
+        } else {
+            if(!local_encontrado) {
+                res.stat(404).send({message: 'Local no encontrado'});
+            } else {
+                console.log('Local encontrado' + local_encontrado);
+                for(i = 0; i < numeroEst; i++) {
+                    let estacionamiento = new Estacionamiento();
+                    estacionamiento.estado = 'libre'; // se deja el estacionamiento libre
+                    estacionamiento.metrosCuadrados = metrosCuadrados;
+                    estacionamiento.local = local_encontrado;
+                    // desde aqui se guarda el estacionamiento y se hace las relaciones
+                    estacionamiento.save((err, estacionamiento_guardado) => {
+                        if(err) {
+                            res.status(500).send({
+                                message: 'Error al Guardar Local' +err
+                            });
+                        } else {
+                            if(!estacionamiento_guardado) {
+                                res.status(404).send({
+                                    message: 'No se ha Guardado el estacionamiento'
+                                });
+                            } else {
+                                local_encontrado.estacionamientos.push(estacionamiento_guardado);
+
+                                local_encontrado.save(function (err, updateObject) {
+                                    if(err) {
+                                        res.status(500).send({message: 'Error'+err});
+                                    } else {
+                                        console.log('Se guardo el estacionamiento al local');
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+                res.status(200).send(
+                    {message: 'Estacionamientos guardados'}
+                );
+            }
+        }
+    })
+}
 module.exports = {
     prueba_local,
     guardar_local,
-    buscar_locales_por_coordenadas
-}
+    buscar_locales_por_coordenadas,
+    agregarEstacionamientos
+};
