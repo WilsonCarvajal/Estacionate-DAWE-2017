@@ -7,6 +7,7 @@ export class Usuario {
         this._contrasenia = value;
     }
 
+    //sd
     set nombre(value: string) {
         this._nombre = value;
     }
