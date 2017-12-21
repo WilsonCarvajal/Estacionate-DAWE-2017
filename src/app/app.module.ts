@@ -18,8 +18,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
+import { UsuarioService } from './services/usuario.service';
 import {GoogleMapsApiService} from "./services/google-maps-api.service";
-import {UsuarioService} from  "./services/usuario.service";
 import {BuscarEstacionamientoComponent} from "./components/buscar-estacionamiento/buscar-estacionamiento.component";
 import {DaweGoogleMapsComponent} from "./components/dawe-google-maps/dawe-google-maps.component";
 

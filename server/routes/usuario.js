@@ -14,6 +14,7 @@ api.get('/prueba', UsuarioController.prueba_usuario);
 api.post('/registro', UsuarioController.guardar_usuario);
 api.get('/buscar', UsuarioController.buscar_usuario);
 api.post('/iniciarSesion', UsuarioController.inicio_sesion);
+api.put('/editar_perfil', UsuarioController.modificar_usuario);
 api.get('/registrar-facebook',passportFacebook.authenticate('facebook',{authType: 'rerequest',scope : ['email']}));
 api.get('/auth/facebook/callback/',passportFacebook.authenticate('facebook',
     { failureRedirect: 'http://localhost:4200/login' }),

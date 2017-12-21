@@ -7,7 +7,6 @@ const ObjectID = require('mongodb').ObjectID;
 const connection = (closure) => {
     return MongoClient.connect('mongodb://localhost:27017/mean', (err, db) => {
         if (err) return console.log(err);
-
         closure(db);
     });
 };
