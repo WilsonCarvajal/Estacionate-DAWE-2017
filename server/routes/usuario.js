@@ -12,5 +12,6 @@ api.get('/prueba', UsuarioController.prueba_usuario);
 api.post('/registro', UsuarioController.guardar_usuario);
 api.get('/buscar', UsuarioController.buscar_usuario);
 api.post('/iniciarSesion', UsuarioController.inicio_sesion);
+api.put('/editar_perfil', UsuarioController.modificar_usuario);
 
 module.exports = api;

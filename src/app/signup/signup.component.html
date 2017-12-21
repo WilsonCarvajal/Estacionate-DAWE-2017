@@ -1,39 +1,64 @@
 <div class="wrapper">
     <div class="page-header" style="background-image: url('../assets/img/login-image.jpg');">
         <div class="filter"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
-                        <div class="card card-register">
-                            <h3 class="title">Welcome</h3>
-                            <div class="social-line text-center">
-                                <a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">
-                                    <i class="fa fa-facebook-square"></i>
-                                </a>
-                                <a href="#pablo" class="btn btn-neutral btn-google btn-just-icon">
-                                    <i class="fa fa-google-plus"></i>
-                                </a>
-                                <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </div>
-                            <form class="register-form">
-                                <label>Email</label>
-                                <input type="text" class="form-control" placeholder="Email">
-
-                                <label>Password</label>
-                                <input type="password" class="form-control" placeholder="Password">
-                                <button class="btn btn-danger btn-block btn-round">Register</button>
-                            </form>
-                            <div class="forgot">
-                                <a href="#" class="btn btn-link btn-danger">Forgot password?</a>
-                            </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
+                    <!--<div *ngIf="submitted">-->
+                        <!--<div>-->
+                            <!--&lt;!&ndash;<h2>{{ mensajeResultado }}</h2>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="card card-register">
+                        <h3  class="title" *ngIf="!submitted">Creando mi cuenta!</h3>
+                        <h3  class="title" *ngIf="submitted">{{ mensajeResultado }}</h3>
+                        <div class="social-line text-center" *ngIf="!submitted">
+                            <a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">
+                                <i class="fa fa-facebook-square"></i>
+                            </a>
+                            <a href="#pablo" class="btn btn-neutral btn-google btn-just-icon">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                            <a href="#pablo" class="btn btn-neutral btn-twitter btn-just-icon">
+                                <i class="fa fa-twitter"></i>
+                            </a>
                         </div>
+                        <form class="register-form" (ngSubmit)="processForm()" *ngIf="!submitted"
+                              [ngClass]="{ 'has-error': email.invalid && email.touched}" #form="ngForm">
+                            <!--{{form.valid}}-->
+                            <!--{{ json}}-->
+                            <label>Nombre</label>
+                            <input [(ngModel)]="usuario.nombre" name="nombre" type="text" class="form-control"
+                                   placeholder="Juan" [required]="true" #nombre maxlength="100">
+
+                            <label>Apellido paterno</label>
+                            <input  [(ngModel)]="usuario.apellido_paterno" name="apellidoPaterno" type="text"
+                                    class="form-control" placeholder="Pérez" [required]="true" #apPaterno
+                                    maxlength="100">
+                            <label>Apellido materno (opcional)</label>
+                            <input  [(ngModel)]="usuario.apellido_materno" name="apellidoMaterno" type="text"
+                                    class="form-control" placeholder="Pereira" #apMaterno
+                                    maxlength="100">
+                            <label>Teléfono (opcional)</label>
+                            <input  [(ngModel)]="usuario.telefono" name="telefono" type="text" class="form-control"
+                                    placeholder="+56912345678 (opcional)" #telefono  maxlength="25">
+                            <label>Email</label>
+                            <input  [(ngModel)]="usuario.email" name="email" type="email" class="form-control"
+                                    placeholder="ejemplo@gmail.com" [required]="true" #email="ngModel" email
+                                    maxlength="120">
+
+                            <label>Contraseña</label>
+                            <input  [(ngModel)]="usuario.contrasenia" name="password" type="password" #contrasenia
+                                    class="form-control" placeholder="*********"
+                                    [required]="true" maxlength="100">
+                            <button type="submit" [disabled]="!form.valid" class="btn btn-danger btn-block btn-round">Registrar</button>
+                        </form>
                     </div>
                 </div>
-                <div class="footer register-footer text-center">
-                    <h6>&copy;{{test | date: 'yyyy'}}, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
-                </div>
             </div>
+            <div class="footer register-footer text-center">
+                <h6>&copy;{{test | date: 'yyyy'}}, hecho con <i class="fa fa-heart heart"></i> por Team DAWE</h6>
+            </div>
+        </div>
     </div>
 </div>

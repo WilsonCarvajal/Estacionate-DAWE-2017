@@ -48,9 +48,9 @@ export class NavbarComponent implements OnInit {
         }
     };
     isHome() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
+        var title = this.location.prepareExternalUrl(this.location.path());
 
-        if( titlee === '/home' ) {
+        if( title === '/home' ) {
             return true;
         }
         else {
@@ -58,8 +58,8 @@ export class NavbarComponent implements OnInit {
         }
     }
     isDocumentation() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if( titlee === '/documentation' ) {
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if( title === '/documentation' ) {
             return true;
         }
         else {
@@ -67,8 +67,18 @@ export class NavbarComponent implements OnInit {
         }
     }
     isLogin() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if( titlee === '/login' ) {
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if( title === '/login' ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    isSignup() {
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if( title === '/signup' ) {
             return true;
         }
         else {
