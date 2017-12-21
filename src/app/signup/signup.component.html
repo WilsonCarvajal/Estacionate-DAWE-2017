@@ -4,14 +4,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-sm-6 mr-auto ml-auto">
-                    <div *ngIf="submitted">
-                        <div>
-                            <h2>{{ mensajeResultado }}</h2>
-                        </div>
-                    </div>
+                    <!--<div *ngIf="submitted">-->
+                        <!--<div>-->
+                            <!--&lt;!&ndash;<h2>{{ mensajeResultado }}</h2>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="card card-register">
-                        <h3  class="title">Creando mi cuenta!</h3>
-                        <div class="social-line text-center">
+                        <h3  class="title" *ngIf="!submitted">Creando mi cuenta!</h3>
+                        <h3  class="title" *ngIf="submitted">{{ mensajeResultado }}</h3>
+                        <div class="social-line text-center" *ngIf="!submitted">
                             <a href="#pablo" class="btn btn-neutral btn-facebook btn-just-icon">
                                 <i class="fa fa-facebook-square"></i>
                             </a>
@@ -24,8 +25,8 @@
                         </div>
                         <form class="register-form" (ngSubmit)="processForm()" *ngIf="!submitted"
                               [ngClass]="{ 'has-error': email.invalid && email.touched}" #form="ngForm">
-                            {{form.valid}}
-                            {{ json}}
+                            <!--{{form.valid}}-->
+                            <!--{{ json}}-->
                             <label>Nombre</label>
                             <input [(ngModel)]="usuario.nombre" name="nombre" type="text" class="form-control"
                                    placeholder="Juan" [required]="true" #nombre maxlength="100">
@@ -34,11 +35,11 @@
                             <input  [(ngModel)]="usuario.apellido_paterno" name="apellidoPaterno" type="text"
                                     class="form-control" placeholder="Pérez" [required]="true" #apPaterno
                                     maxlength="100">
-                            <label>Apellido materno</label>
+                            <label>Apellido materno (opcional)</label>
                             <input  [(ngModel)]="usuario.apellido_materno" name="apellidoMaterno" type="text"
                                     class="form-control" placeholder="Pereira" #apMaterno
                                     maxlength="100">
-                            <label>Teléfono</label>
+                            <label>Teléfono (opcional)</label>
                             <input  [(ngModel)]="usuario.telefono" name="telefono" type="text" class="form-control"
                                     placeholder="+56912345678 (opcional)" #telefono  maxlength="25">
                             <label>Email</label>
@@ -50,7 +51,7 @@
                             <input  [(ngModel)]="usuario.contrasenia" name="password" type="password" #contrasenia
                                     class="form-control" placeholder="*********"
                                     [required]="true" maxlength="100">
-                            <button type="submit" class="btn btn-danger btn-block btn-round">Registrar</button>
+                            <button type="submit" [disabled]="!form.valid" class="btn btn-danger btn-block btn-round">Registrar</button>
                         </form>
                     </div>
                 </div>

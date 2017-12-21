@@ -6,8 +6,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UsuarioService {
     public url: string;
-    constructor(public _http: Http) {
-        this.url = 'localhost:8000/usuarios/registro';
+    // public _http: Http;
+    constructor(private _http: Http) {
+        this.url = '';
     }
 
     // getUsuario() {
@@ -15,10 +16,23 @@ export class UsuarioService {
     // }
 
     addUsuario(usuario: Usuario) {
-        let json = JSON.stringify(usuario);
-        return this._http.post(this.url, json )
+        this.url = 'http://localhost:8000/api/registro';
+        const json = JSON.stringify(usuario);
+        const asd =  this._http.post(this.url, json )
             .map(
                 res => res.json());
+        console.log(asd);
+        return asd;
+    }
+
+    findUsuario(usuario: Usuario) {
+        this.url = 'http://localhost:8000/api/buscar';
+        const json = JSON.stringify(usuario);
+        const asd =  this._http.get(this.url, json )
+            .map(
+                res => res.json());
+        console.log(JSON.stringify(asd));
+        return asd;
     }
 
 }
