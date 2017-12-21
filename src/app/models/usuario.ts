@@ -6,7 +6,7 @@ export class Usuario {
     set contrasenia(value: string) {
         this._contrasenia = value;
     }
-
+//hhhh
     set nombre(value: string) {
         this._nombre = value;
     }
