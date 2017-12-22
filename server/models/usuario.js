@@ -5,21 +5,29 @@ var jwt = require('../services/jwt');
 var Schema = mongoose.Schema;
 
 var UsuarioSchema = Schema({
-    rut: {
-        type: Number,
-        unique: 'error testeando Rut',
-        required: 'Porfavor, Ingresa tu Rut',
-        trim: true
+    // rut: {
+    //     type: Number,
+    //     unique: 'error testeando rut',
+    //     required: 'No se registró un rut',
+    //     trim: true
+    // },
+    email: { type: String,
+        lowercase: true,
+        unique: 'error testeando email',
+        required: 'No se registró un email',
     },
+    rut: Number,
     contrasenia: String,
     nombre: String,
     apellidoPaterno: String,
     apellidoMaterno: String,
-    email: { type: String, lowercase: true },
+    // email: String,
+
     direccion: String,
     locales:  [{ "type": Schema.Types.ObjectId, "ref": "Local" }],
     rol: { type: String, lowercase: true },
     autos:  [{ "type": Schema.Types.ObjectId, "ref": "Auto" }],
+    idFacebook: String
 });
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

@@ -10,7 +10,7 @@ var AutoSchema = Schema({
     patente: { type: String, lowercase: true },
     color: { type: String, lowercase: true },
     fabricante: String,
-    modelo: Strring,
+    modelo: String,
     metrosCuadrado: {
         type: Number,
         min: [0, 'No puede tener Metros cuadrados menor o igual a 0']

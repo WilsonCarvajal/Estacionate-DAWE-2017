@@ -10,12 +10,6 @@ var Usuario = require('../models/usuario');
 
 var jwt = require('../services/jwt');
 
-//PASSPORT
-var passport = require('passport'),
-    localStrategy = require('passport-local').Strategy;
-var passportFacebook = require('passport'),
-    facebookStrategy = require('passport-facebook');
-
 function prueba_usuario(req, res){
     console.log('prueba correcta');
     res.status(200).send({
@@ -67,18 +61,63 @@ function buscar_usuario(req, res){
     //Recoger los Parametros de la Peticion
     var usuario = new Usuario();
     var params = req.query;
-    usuario.rut = params.rut;
+    usuario.email = params.email;
 
     //console.log(req.query.rut);
 
-    Usuario.findOne({ rut: usuario.rut}, (err,usuario_encontrado) => {
+    Usuario.findOne({ email: usuario.email}, (err,usuario_encontrado) => {
         if(err){
             res.status(500).send({message: 'Error'+err})
-        }else{
+        } else {
             if(!usuario_encontrado){
-                res.status(404).send({message: 'Usuario no Encontrado'})
+                res.status(404).send({message: 'Usuario no encontrado'})
             }else{
                 res.status(200).send(usuario_encontrado);
+            }
+        }
+    });
+}
+function modificar_usuario(req, res) {
+    var usuario = new Usuario();
+    var params = req.body;
+    var id;
+    usuario.rut = params.rut;
+    usuario.nombre = params.nombre;
+    usuario.apellido_paterno = params.apellido_paterno;
+    usuario.apellido_materno = params.apellido_materno;
+    usuario.email = params.email;
+    usuario.direccion = params.direccion;
+    usuario.locales = params.locales;
+    usuario.autos = params.autos;
+    usuario.rol = params.rol;
+
+    Usuario.findOne({ email: usuario.email}, (err,usuario_encontrado) => {
+        if(err){
+            res.status(500).send({message: 'Error '+err})
+        } else {
+            if(!usuario_encontrado){
+                res.status(404).send({message: 'Usuario no encontrado'})
+            }else{
+                // res.status(200).send(usuario_encontrado);
+                id = usuario_encontrado._id;
+                Usuario.findByIdAndUpdate(id,
+                    {
+                        $set: {email: req.body.email, nombre: usuario.nombre, apellido_paterno:
+                            usuario.apellido_paterno, apellido_materno: usuario.apellido_materno,
+                            direccion: usuario.direccion, locales: usuario.locales, autos: usuario.autos,
+                            rol: usuario.rol
+                        }
+                    },
+                    {
+                        new: true
+                    },
+                    function(err, usuarioActualizado) {
+                        if (err) {
+                            res.send("Error actualizando usuario" + err)
+                        } else {
+                            res.json(usuarioActualizado)
+                        }
+                    });
             }
         }
     });
@@ -86,15 +125,15 @@ function buscar_usuario(req, res){
 }
 
 function guardar_usuario(req, res){
-    //Crear Objeto Usuario
+    // Crear Objeto Usuario
     var usuario = new Usuario();
 
-    //Recoger los Parametros de la Peticion
+    // Recoger los Parametros de la Peticion
     var params = req.body;
     usuario.rut = params.rut;
     usuario.nombre = params.nombre;
     usuario.apellido_paterno = params.apellido_paterno;
-    usuario.apellido_materno = params.apellido_Materno;
+    usuario.apellido_materno = params.apellido_materno;
     usuario.email = params.email;
     usuario.direccion = params.direccion;
     usuario.locales = null;
@@ -108,12 +147,12 @@ function guardar_usuario(req, res){
     usuario.save((err, usuario_guardado) => {
         if(err){
             res.status(500).send({
-                message: 'Error al Guardar Usuario ' +err
+                message: 'Error al guardar usuario' +err
             });
         }else{
             if(!usuario_guardado){
                 res.status(404).send({
-                    message: 'No se ha Guardado el Usuario'
+                    message: 'No se ha guardado el usuario'
                 });
             }else{
                 res.status(200).send({usuario: usuario_guardado})
@@ -122,56 +161,75 @@ function guardar_usuario(req, res){
     });
 }
 
-//Funcion de prueba
-function login(req, res, next) {
-    passport.use(new localStrategy({
-            usernameField: 'username',
-            passwordField: 'password',
-        },
-        function (username, password, done) {
-            console.log('FUNCIONA:'+username);
-            console.log(password);
-        }
-    ));
-
-    passport.serializeUser(function (user, done) {
-        done(null, user); // req.user
-    });
-    passport.deserializeUser(function (user, done) {
-        done(null, user);
-    });
-
-    console.log(req.url);
-    console.log(req.body);
-    passport.authenticate('local', function(err, user, info) {
-        console.log("authenticate");
-        console.log(err);
-        console.log(user);
-        console.log(info);
-    })(req, res, next);
-}
-
-
 function registrarFacebook(accessToken, refreshToken, profile, done) {
-
     console.log('PASSPORT--FACEBOOK');
-    return done(null,profile._json.id);
+
+    Usuario.findOne({ email: profile._json.email}, (err,usuario_encontrado) => {
+        if(err){
+            console.log('Error');
+            // res.status(500).send({message: 'Error'+err})
+        }else{
+            if(!usuario_encontrado){
+                console.log('USUARIO NO ENCONTRADO')
+                //Crear Objeto Usuario
+                var usuario = new Usuario();
+
+                //Recoger los Parametros de la Peticion
+                var params = profile._json;
+                usuario.rut = null;
+                usuario.nombre = params.name;
+                usuario.apellido_paterno = null;
+                usuario.apellido_materno = null;
+                usuario.email = params.email;
+                usuario.direccion = null;
+                usuario.locales = null;
+                usuario.autos = null;
+                usuario.rol = null;
+                usuario.contrasenia = null;
+                usuario.idFacebook = params.id;
+                usuario.save();
+                return done(null,params);
+            }else{
+                console.log('ENCONTRADO');
+                return done(null,profile._json);
+            }
+        }
+    });
 
 }
 
-function callback() {
-    console.log('callBack');
-    passportFacebook.authenticate('facebook',
-        { successRedirect: 'http://localhost:4200/login',
-            failureRedirect: 'http://localhost:4200/login' });
+function callback(req, res,next) {
+    console.log(req.user);
+    res.redirect('http://localhost:4200/home/'+req.user.id);
+
+}
+
+function buscarFacebook(req,res) {
+    //Recoger los Parametros de la Peticion
+    var usuario = new Usuario();
+    // var params = req.query;
+    // usuario.rut = params.rut;
+
+    Usuario.findOne({ idFacebook: req.params.id}, (err,usuario_encontrado) => {
+        if(err){
+            res.status(500).send({message: 'Error'+err})
+        }else{
+            if(!usuario_encontrado){
+                res.status(404).send({message: 'Usuario no Encontrado'})
+            }else{
+                res.status(200).send(usuario_encontrado);
+            }
+        }
+    });
 }
 
 module.exports = {
     prueba_usuario,
     guardar_usuario,
     buscar_usuario,
+    modificar_usuario,
     inicio_sesion,
-    login,
     registrarFacebook,
-    callback
+    callback,
+    buscarFacebook
 }

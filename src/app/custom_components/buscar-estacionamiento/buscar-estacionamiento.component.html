@@ -1,0 +1,26 @@
+<div class="main">
+  <div id="section text-center">
+      <div class="container">
+         <div class="row">
+             <div class="col-md-10 mr-auto ml-auto">
+                 <h3 class="title text-center">{{ title }}</h3>
+                 <form class="register-form">
+                     <label>Dirección</label>
+                     <input type="text" class="form-control" #titleInput id="direccion">
+                     <br>
+                     <button type="submit" class="btn btn-danger btn-block btn-round" (click)="findParking(titleInput.value)">Buscar</button>
+                 </form>
+                 <br>
+                 <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+                     <ngb-panel title="Map">
+                         <ng-template ngbPanelContent *ngIf="parking_lots">
+                             <app-dawe-google-maps [mapOrigin]="{lat: origin.lat, lng : origin.lng}" [locales]="[parking_lots]"></app-dawe-google-maps>
+                         </ng-template>
+                     </ngb-panel>
+
+                 </ngb-accordion>
+             </div>
+         </div>
+    </div>
+  </div>
+</div>
