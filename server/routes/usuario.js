@@ -1,11 +1,11 @@
 /**
  * Created by Wizao on 05-11-2017.
  */
-'use strict'
+'use strict';
 
 var express = require('express');
 var UsuarioController = require('../controllers/usuario');
-const mdAuth = require('../../../../DAWE/Estacionate-DAWE-2017/server/midleware/autenticator');
+const mdAuth = require('../midleware/autenticator');
 var passportFacebook = require('passport'),
     facebookStrategy = require('passport-facebook');
 
