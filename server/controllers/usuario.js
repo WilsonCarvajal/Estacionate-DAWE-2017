@@ -76,7 +76,6 @@ function buscar_usuario(req, res){
             }
         }
     });
-
 }
 function modificar_usuario(req, res) {
     var usuario = new Usuario();
