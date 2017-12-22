@@ -34,3 +34,8 @@ function buscar_estacionamiento(req, res){
         }
     });
 }
+
+module.exports = {
+    prueba_estacionamiento,
+    buscar_estacionamiento
+}
