@@ -1,0 +1,19 @@
+<div id="map_canvas">
+  <!-- this creates a google map on the page with the given lat/lng from -->
+  <!-- the component as the initial center of the map: -->
+    <div *ngIf="mapOrigin">
+        <agm-map [latitude]="mapOrigin.lat" [longitude]="mapOrigin.lng" [zoom]="mapZoom">
+            <agm-marker [latitude]="mapOrigin.lat" [longitude]="mapOrigin.lng"></agm-marker>
+            <div *ngIf="locales">
+                <div *ngFor="let local of locales">
+                    <agm-marker [latitude]="local.latitud" [longitude]="local.longitud"></agm-marker>
+                </div>
+            </div>
+        </agm-map>
+    </div>
+    <div *ngIf="!mapOrigin">
+        <agm-map [latitude]="-23.6509279" [longitude]="-70.39750219999999">
+            <agm-marker [latitude]="-23.6509279" [longitude]="-70.39750219999999"></agm-marker>
+        </agm-map>
+    </div>
+</div>
