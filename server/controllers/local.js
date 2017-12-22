@@ -73,19 +73,22 @@ function modificar_direccion_local(req,res){
     console.log(req.query._id);
 
     Local.findById(req.params.local_id, (err,local) => {
-        if(err){
-            res.status(500).send({message: 'Error'+err})
-        }else{
+        if (err) {
+            res.status(500).send({message: 'Error' + err})
+        } else {
             //Se cambia la direccion
             local.direccion = req.body.direccion || local.direccion;
             //UPDATE DATABASE
-            local.save((err,local_encontrado) => {
-                if(!local_encontrado){
+            local.save((err, local_encontrado) => {
+                if (!local_encontrado) {
                     res.status(404).send({message: 'No se encontró el local'})
-                }else{
+                } else {
                     res.status(200).send(local_encontrado);
                 }
             });
+        }
+    });
+}
 function buscar_locales_por_coordenadas(req, res){
     //Recoger los Parametros de la Peticion
     let local = new Local();
