@@ -19,7 +19,7 @@ var LocalSchema = Schema({
         min: [0, 'No puede tener una cantidad disponible menor a 0']
     },
     nombre: String,
-    dueño: { "type": Schema.Types.ObjectId, "ref": "Usuario"},
+    duenio: { "type": Schema.Types.ObjectId, "ref": "Usuario"},
     estacionamientos:  [{ "type": Schema.Types.ObjectId, "ref": "Estacionamiento" }],
     tarifaBloque:  [{ "type": Schema.Types.ObjectId, "ref": "TarifaBloque" }],
 

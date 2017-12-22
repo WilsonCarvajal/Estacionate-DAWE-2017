@@ -36,19 +36,24 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 //cargar rutas
 var usuario_routes = require('./server/routes/usuario');
+var local_routes = require('./server/routes/local');
+
+
 
 
 // Angular DIST output folder
 app.use(express.static(path.join(__dirname, 'dist')));
 
-//
 app.use((req, res, next) =>{
     res.header('Access-Control-Allow-Origin','*');
     res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     res.header('Allow', 'GET, POST, OPTION, PUT, DELETE');
+
     next();
 });
+
 
 //Ruta Base
 app.use('/api', usuario_routes);
@@ -57,9 +62,8 @@ app.use('/api', usuario_routes);
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
-
 //rutas body-parser
 
-
+// require('./server/passport')(app);
 
 module.exports = app;
