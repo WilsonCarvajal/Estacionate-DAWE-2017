@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {Params, ActivatedRoute, Router} from "@angular/router";
+import {UsuarioService} from "../../services/usuario.service";
+import {Usuario} from "../../models/Usuario";
 
 @Component({
     selector: 'app-navbar',
@@ -9,14 +12,33 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
+    public usuario: Usuario;
 
-    constructor(public location: Location, private element : ElementRef) {
+    constructor(public location: Location, private element : ElementRef,private _router: Router,
+                private _route: ActivatedRoute,
+                private usuarioService: UsuarioService) {
         this.sidebarVisible = false;
     }
 
     ngOnInit() {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+        if (localStorage.getItem('usuario') != null){
+            this.usuarioService.getUsuario(localStorage.getItem('usuario')).subscribe(
+                response => {
+                    if(response){
+                        this.usuario = response;
+                        this._router.navigate(['/'])
+                    }else{
+                        this._router.navigate(['ERROR']);
+                    }
+                },
+                error => {
+                    alert(error)
+                    console.log(<any>error);
+                }
+            );
+        }
     }
     sidebarOpen() {
         const toggleButton = this.toggleButton;
@@ -48,9 +70,9 @@ export class NavbarComponent implements OnInit {
         }
     };
     isHome() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
+        var title = this.location.prepareExternalUrl(this.location.path());
 
-        if( titlee === '/home' ) {
+        if( title === '/home' ) {
             return true;
         }
         else {
@@ -58,8 +80,8 @@ export class NavbarComponent implements OnInit {
         }
     }
     isDocumentation() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if( titlee === '/documentation' ) {
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if( title === '/documentation' ) {
             return true;
         }
         else {
@@ -67,12 +89,32 @@ export class NavbarComponent implements OnInit {
         }
     }
     isLogin() {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        if( titlee === '/login' ) {
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if( title === '/login' ) {
             return true;
         }
         else {
             return false;
         }
     }
+
+    isSignup() {
+        var title = this.location.prepareExternalUrl(this.location.path());
+        if( title === '/signup' ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    salir(){
+        this.usuario = null;
+        this._router.navigate(['/'])
+        localStorage.clear();
+    }
+
+
+
+
 }
